@@ -1,0 +1,127 @@
+---
+title: "(04NLS) Lab File"
+output: RMD File
+date: "3/16/25"
+author: "Andrea Anger"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### This assignment contains 10 questions. Use the code chunk under each question to type in your code. Name your assignment NLSLastFirst where Last is your last name and First is your first name. Once you are done, submit the output html file. Upload your Rmd and html files to GitHub your assignment repository. Submit a screenshot to prove it.
+
+**Q01.** A vector of students' exam scores has been initialized. Create a **factor** with levels of scores as follows: **Poor: [0,70); Good: [70,86); Excellent: [86,100]** <br>
+**Output:** <br> 
+[1] Excellent Poor Excellent Good Poor Excellent Poor Poor Good Poor Poor Excellent Poor Good<br>
+Levels: Poor Good Excellent<br>
+
+
+```{r}
+scores <- c(92, 55, 89, 75, 62, 95, 44, 67, 78, 50, 61, 88, 33, 82)
+scores <- cut(scores,breaks=c(0,70,86,100), right=FALSE, labels=c("Poor","Good","Excellent"))
+scores
+```
+
+**Q02.** Based on the **scores** vector in **Q01**, return the **factor** vector of student scores for only "Good" scores. <br>
+**Output:** <br>
+[1] Good Good Good<br>
+Levels: Poor Good Excellent
+```{r}
+scores[scores == "Good"]
+```
+
+**Q03.** Create a list named **class**. **class** list contains two elements. The first element is a vector of class averages with the value of (92.0, 75.0, 83.6, 75.5, 66.0, 80.5, 61.3, 56.5, 98.5); the second element is a vector of class mode with value of ("Online","OnCampus","Online","OnCampus","OnCampus","Online","OnCampus","OnCampus","Online") <br>
+**Output:** <br>
+[[1]]<br>
+[1]  92.0 75.0 83.6 75.5 66.0 80.5 61.3 56.5 98.5<br>
+
+[[2]]<br>
+[1] "Online"   "OnCampus" "Online"   "OnCampus" "OnCampus" "Online"   "OnCampus" "OnCampus" "Online"<br>
+
+```{r}
+class.averages <- c(92.0, 75.0, 83.6, 75.5, 66.0, 80.5, 61.3, 56.5, 98.5)
+class.mode <- c("Online","OnCampus","Online","OnCampus","OnCampus","Online","OnCampus","OnCampus","Online")
+class <- list(class.averages,class.mode)
+class
+```
+
+**Q04.** Based on the **class** list in **Q03**, add names to the list elements with the value of ("**averages**", "**modes**") and display the **class**.<br>
+**Output:** <br>
+$averages<br>
+[1]  92.0 75.0 83.6 75.5 66.0 80.5 61.3 56.5 98.5<br>
+
+$modes<br>
+[1] "Online"   "OnCampus" "Online"   "OnCampus" "OnCampus" "Online"   "OnCampus" "OnCampus" "Online"<br>
+
+```{r}
+names(class) <- c("averages","modes")
+class
+```
+
+**Q05.** Based on the **class** list in **Q03**, extract data for only "Online" classes.<br>
+**Output:** <br>
+[1] "Online" "Online" "Online" "Online"<br>
+
+```{r}
+class[[2]][class[[2]]=="Online"]
+```
+
+**Q06.** Create a data frame named **employees**. **employees** data frame contains 3 columns storing in 3 vectors. The first column contains employee id with value of c(1:5); the second column contains employee name with the value of c("John S", "Mary J", "Justin W", "Ashley A", "Emily B"); the third column contains employee weekly pay with value of c(2500, 1850, 1000, 1200, 900). Use "**id**", "**name**", and "**pay**" as column names. <br>
+**Output:** <br>
+
+![Fig: Graph](Outputimg/Q6Output.png){#id .class width=18% height=18%}
+
+```{r}
+id <- c(1:5)
+name <- c("John S", "Mary J", "Justin W", "Ashley A", "Emily B")
+pay <- c(2500, 1850, 1000, 1200, 900)
+employees <- data.frame(id,name,pay)
+names(employees) <- c("id","name","pay")
+employees
+```
+
+**Q07.** Extract the data from the **employees** data frame in **Q06** to display employees with pay >= 1500.<br>
+**Output:** <br>
+
+![Fig: Graph](Outputimg/Q7Output.png){#id .class width=15% height=15%}
+
+```{r}
+employees[employees$pay>+ 1500,]
+```
+
+**Q08.** There is department information indicated below: John:"Accounting", Mary:"Marketing", Justin:"Finance", Ashley:"IT", Emily:"Marketing". Append these data as a new string column variable in **employees** data frame called **dept**.<br>
+**Output:** <br>
+
+![Fig: Graph](Outputimg/Q8Output.png){#id .class width=25% height=25%}
+
+```{r}
+dept <- c("Accounting","Marketing","Finance","IT","Marketing")
+employees$dept <- dept
+employees
+```
+
+**Q09.** Declare a matrix named **m** with value (10:18) in 3 rows and 3 columns with row names ("A","B","C") and column names ("1","2","3"). Then convert the matrix to a vector named **v**<br>
+**Output:** <br>
+
+![Fig: Graph](/Users/HCCS/Documents/ITDS1372_StatisticalProgrammingWithR/Chapter 5/outputimg/Q9Output.png){#id .class width=12% height=12%}
+<br>[1] 10 11 12 13 14 15 16 17 18
+
+```{r}
+m <- matrix(10:18,3,3,dimnames=list(c("A","B","C"),c("1","2","3")))
+m
+```
+
+**Q10.** A vector **bar** is initialized as follows: *bar<- c(10, NA, NA, 24, 56)*. Use appropriate functions to check whether bar is empty use 1) element-wise checking which returns True/False for each element and 2) vector-wise checking which returns a single True or False.<br>
+**Output:** <br>
+
+[1] "Element-wise checking"<br>
+[1] FALSE  TRUE  TRUE FALSE FALSE<br>
+[1] "Vector-wise checking"<br>
+[1] FALSE
+
+```{r}
+bar<- c(10, NA, NA, 24, 56)
+is.na(bar)
+any(is.na(bar))
+```
