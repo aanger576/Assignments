@@ -1,6 +1,6 @@
 ---
 title: "(04NLS) Lab File"
-output: RMD File
+output:
 date: "3/16/25"
 author: "Andrea Anger"
 ---
@@ -70,7 +70,6 @@ class[[2]][class[[2]]=="Online"]
 **Q06.** Create a data frame named **employees**. **employees** data frame contains 3 columns storing in 3 vectors. The first column contains employee id with value of c(1:5); the second column contains employee name with the value of c("John S", "Mary J", "Justin W", "Ashley A", "Emily B"); the third column contains employee weekly pay with value of c(2500, 1850, 1000, 1200, 900). Use "**id**", "**name**", and "**pay**" as column names. <br>
 **Output:** <br>
 
-![Fig: Graph](Outputimg/Q6Output.png){#id .class width=18% height=18%}
 
 ```{r}
 id <- c(1:5)
@@ -84,7 +83,6 @@ employees
 **Q07.** Extract the data from the **employees** data frame in **Q06** to display employees with pay >= 1500.<br>
 **Output:** <br>
 
-![Fig: Graph](Outputimg/Q7Output.png){#id .class width=15% height=15%}
 
 ```{r}
 employees[employees$pay>+ 1500,]
@@ -93,7 +91,6 @@ employees[employees$pay>+ 1500,]
 **Q08.** There is department information indicated below: John:"Accounting", Mary:"Marketing", Justin:"Finance", Ashley:"IT", Emily:"Marketing". Append these data as a new string column variable in **employees** data frame called **dept**.<br>
 **Output:** <br>
 
-![Fig: Graph](Outputimg/Q8Output.png){#id .class width=25% height=25%}
 
 ```{r}
 dept <- c("Accounting","Marketing","Finance","IT","Marketing")
@@ -103,8 +100,6 @@ employees
 
 **Q09.** Declare a matrix named **m** with value (10:18) in 3 rows and 3 columns with row names ("A","B","C") and column names ("1","2","3"). Then convert the matrix to a vector named **v**<br>
 **Output:** <br>
-
-![Fig: Graph](/Users/HCCS/Documents/ITDS1372_StatisticalProgrammingWithR/Chapter 5/outputimg/Q9Output.png){#id .class width=12% height=12%}
 <br>[1] 10 11 12 13 14 15 16 17 18
 
 ```{r}
