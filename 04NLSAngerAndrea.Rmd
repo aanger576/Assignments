@@ -5,10 +5,6 @@ date: "3/16/25"
 author: "Andrea Anger"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 #### This assignment contains 10 questions. Use the code chunk under each question to type in your code. Name your assignment NLSLastFirst where Last is your last name and First is your first name. Once you are done, submit the output html file. Upload your Rmd and html files to GitHub your assignment repository. Submit a screenshot to prove it.
 
 **Q01.** A vector of students' exam scores has been initialized. Create a **factor** with levels of scores as follows: **Poor: [0,70); Good: [70,86); Excellent: [86,100]** <br>
