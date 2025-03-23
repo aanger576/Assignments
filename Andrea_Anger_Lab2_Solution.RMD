@@ -1,7 +1,7 @@
 ---
 title: 'Lab2: Matrix, Lists, and Data Frames'
-author: "ITDS 1372"
-date: "` Sys.Date()`"
+author: "Andrea Anger"
+date: "` 2/28/25"
 output: html_document
 ---
 1. Create a Matrix
@@ -10,7 +10,8 @@ print(mat)
 Creates a 3×3 matrix filled with numbers from 1 to 9.
 
 ```{r}
-
+mat <- matrix(1:9, nrow = 3, ncol = 3)
+print(mat)
 
 
 ```
@@ -21,7 +22,9 @@ mat[1, ]   # Access the first row
 mat[, 2]   # Access the second column
  
 ```{r}
-
+mat[2, 3]  # Access the element in row 2, column 3
+mat[1, ]   # Access the first row
+mat[, 2]   # Access the second column
 ```
 
 
@@ -30,7 +33,8 @@ t_mat <- t(mat)
 print(t_mat)
 Swaps rows and columns.
 ```{r}
-
+t_mat <- t(mat)
+print(t_mat)
 ```
  
 4. Matrix Addition and Subtraction
@@ -39,7 +43,9 @@ sum_mat <- mat + mat2
 diff_mat <- mat - mat2
 Adds and subtracts corresponding elements.
 ```{r}
-
+mat2 <- matrix(9:1, nrow = 3, ncol = 3)
+sum_mat <- mat + mat2
+diff_mat <- mat - mat2
 
 
 ```
@@ -51,7 +57,7 @@ Performs matrix multiplication.
 
 ```{r}
 
-
+prod_mat <- mat %*% mat2
 
 
 ```
@@ -63,7 +69,7 @@ Multiplies corresponding elements.
 
 ```{r}
 
-
+elementwise_prod <- mat * mat2
 
 
 
@@ -75,7 +81,7 @@ det(mat)
 Computes the determinant of a square matrix.
 
 ```{r}
-
+det(mat)
 
 
 
@@ -87,7 +93,7 @@ inv_mat <- solve(mat)
 Finds the inverse if the matrix is invertible.
 ```{r}
 
-
+inv_mat <- solve(mat)
 
 
 ```
@@ -100,7 +106,8 @@ col_bind <- cbind(mat, c(10, 11, 12))  # Adds a column
 
 ```{r}
 
-
+row_bind <- rbind(mat, c(10, 11, 12))  # Adds a row
+col_bind <- cbind(mat, c(10, 11, 12))  # Adds a column
 
 ```
 
@@ -113,7 +120,9 @@ ncol(mat)
 Returns the number of rows and columns in a matrix.
 
 ```{r}
-
+dim(mat)
+nrow(mat)
+ncol(mat)
 
 
 ```
@@ -127,7 +136,8 @@ print(sub_mat)
 Extracts a 2×2 submatrix from the original matrix.
 ```{r}
 
-
+sub_mat <- mat[1:2, 2:3]
+print(sub_mat)
 
 
 ```
@@ -139,8 +149,9 @@ my_list <- list(name = "Alice", age = 25, scores = c(85, 90, 95))
 print(my_list)
 Creates a list with different data types.
 
-```{}
-
+```{r}
+my_list <- list(name = "Alice", age = 25, scores = c(85, 90, 95))
+print(my_list)
 ```
 
 
@@ -151,7 +162,8 @@ my_list[[3]]  # Access the third element
 Uses [[ ]] to retrieve elements.
 
 ```{r}
-
+my_list[[1]]  # Access the first element
+my_list[[3]]  # Access the third element
 
 ```
 
@@ -164,7 +176,8 @@ my_list$scores
 Uses $ to access named elements.
 
 ```{r}
-
+my_list$name
+my_list$scores
 
 
 ```
@@ -179,7 +192,8 @@ my_list$scores[1] <- 88
 
 ```{r}
 
-
+my_list$age <- 26
+my_list$scores[1] <- 88  
 
 ```
 
@@ -189,7 +203,7 @@ my_list$city <- "New York"
 
 #Adds a new element to the list.
 ```{r}
-
+my_list$city <- "New York"
 
 
 ```
@@ -201,7 +215,7 @@ my_list$age <- NULL
 Removes the age element from the list.
 ```{r}
 
-
+my_list$age <- NULL
 
 ```
 
@@ -213,7 +227,7 @@ str(my_list)
 Displays the structure of the list.
 
 ```{r}
-
+str(my_list)
 
 
 ```
@@ -227,7 +241,7 @@ Returns the number of elements in the list.
 ```{r}
 
 
-
+length(my_list)
 
 ```
 
@@ -240,7 +254,8 @@ A list inside another list.
 
 ```{r}
 
-
+nested_list <- list(person = my_list, company = "TechCorp")
+print(nested_list)
 
 
 ```
@@ -256,7 +271,7 @@ Converts the list into a vector (if possible).
 ```{r}
 
 
-
+unlist(my_list)
 
 ```
 
@@ -268,16 +283,19 @@ df <- data.frame(Name = c("Alice", "Bob", "Charlie"),
 print(df)
 Creates a simple data frame with three columns.
 ```{r}
-
+df <- data.frame(Name = c("Alice", "Bob", "Charlie"),
+                 Age = c(25, 30, 35),
+                 Score = c(85, 90, 95))
 ```
  
 2. Accessing Columns by Name
 
-
 df$Age  # Access the "Age" column
 df["Score"]  # Also accesses the "Score" column
-```{r}
 
+```{r}
+df$Age  # Access the "Age" column
+df["Score"]  # Also accesses the "Score" column
 ```
  
 3. Accessing Rows and Elements by Index
@@ -288,7 +306,9 @@ df[, 2]   # Second column
 df[2, 3]  # Value at row 2, column 3
 ```{r}
 
-
+df[1, ]   # First row
+df[, 2]   # Second column
+df[2, 3]  # Value at row 2, column 3
 
 ```
  
@@ -298,17 +318,23 @@ df[2, 3]  # Value at row 2, column 3
 df$City <- c("New York", "Los Angeles", "Chicago")
 print(df)
 Adds a new column to the data frame.
+
+```{r}
+df$City <- c("New York", "Los Angeles", "Chicago")
+print(df)
+```
+
  
 5. Removing a Column
-```{r}
+df$Score <- NULL
+Removes the "Score" column.
 
+```{r}
+df$Score <- NULL
 
 
 ```
 
-
-df$Score <- NULL
-Removes the "Score" column.
  
 6. Filtering Rows Based on Condition
 
@@ -317,7 +343,7 @@ subset(df, Age > 28)
 Filters rows where Age is greater than 28.
 ```{r}
 
-
+subset(df, Age > 28)
 
 
 ```
@@ -330,7 +356,8 @@ print(df_sorted)
 Sorts the data frame by Age in ascending order.
 ```{r}
 
-
+df_sorted <- df[order(df$Age), ]
+print(df_sorted)
 
 ```
  
@@ -342,20 +369,23 @@ print(df_selected)
 Extracts only the "Name" and "Age" columns.
  
 ```{r}
-
+df_selected <- df[, c("Name", "Age")]
+print(df_selected)
 
 
 ```
  
 9. Finding the Number of Rows and Columns
 
+nrow(df)  # Number of rows
+ncol(df)  # Number of columns
+dim(df)   # Dimensions of the data frame
+
+```{r}
 
 nrow(df)  # Number of rows
 ncol(df)  # Number of columns
 dim(df)   # Dimensions of the data frame
-```{r}
-
-
 
 ```
  
@@ -368,7 +398,7 @@ Displays structure including column types and sample values.
  
 ```{r}
 
-
+str(df)
 
 ```
  
@@ -381,7 +411,7 @@ Changes the "Age" column from numeric to character.
 ```{r}
 
 
-
+df$Age <- as.character(df$Age)
 
 
 ```
@@ -394,7 +424,7 @@ Finds the mean of all numeric columns.
 ```{r}
 
 
-
+colMeans(df[, sapply(df, is.numeric)], na.rm = TRUE)
 
 ```
  
@@ -406,10 +436,14 @@ df2 <- data.frame(Name = c("Alice", "Bob", "Charlie"),
 merged_df <- merge(df, df2, by = "Name")
 print(merged_df)
 Merges two data frames based on the "Name" column.
+
 ```{r}
 
 
-
+df2 <- data.frame(Name = c("Alice", "Bob", "Charlie"),
+                  Salary = c(50000, 60000, 70000))
+merged_df <- merge(df, df2, by = "Name")
+print(merged_df)
 
 ```
  
@@ -422,7 +456,9 @@ print(df_cleaned)
 Handles missing values by removing rows that contain NA.
 ```{r}
 
-
+df$Age[2] <- NA  # Introduce a missing value
+df_cleaned <- na.omit(df)  # Remove rows with missing values
+print(df_cleaned)
 
 
 ```
@@ -436,7 +472,8 @@ Converts a data frame into a matrix.
 
 ```{r}
 
-
+df_matrix <- as.matrix(df)
+print(df_matrix)
 
 
 ```
@@ -450,7 +487,10 @@ The "Name" column is converted into a factor.
 
 ```{r}
 
-
+df1 <- data.frame(Name = c("Alice", "Bob", "Charlie"), 
+                  Age = c(25, 30, 35), 
+                  stringsAsFactors = TRUE)
+str(df1)
 
 ```
 
@@ -462,7 +502,10 @@ df2 <- data.frame(Name = c("Alice", "Bob", "Charlie"),
 str(df2)
 The "Name" column remains as a character vector.
 ```{r}
-
+df2 <- data.frame(Name = c("Alice", "Bob", "Charlie"), 
+                  Age = c(25, 30, 35), 
+                  stringsAsFactors = FALSE)
+str(df2)
 ```
 
 18. Converting a Character Column to Factor Manually
@@ -471,7 +514,8 @@ df2$Name <- as.factor(df2$Name)
 str(df2)
 Manually converts the "Name" column to a factor.
 ```{r}
-
+df2$Name <- as.factor(df2$Name)
+str(df2)
 ```
 
 19. Checking if a Column is a Factor
@@ -480,7 +524,8 @@ is.factor(df1$Name)  # TRUE because stringsAsFactors = TRUE
 is.factor(df2$Name)  # FALSE because stringsAsFactors = FALSE
 Verifies whether a column is a factor or not.
 ```{r}
-
+is.factor(df1$Name)  # TRUE because stringsAsFactors = TRUE
+is.factor(df2$Name)  # FALSE because stringsAsFactors = FALSE
 ```
 
 20. Changing Factor Levels After Using stringsAsFactors = TRUE
@@ -490,5 +535,7 @@ print(df1)
 Renames factor levels in the "Name" column.
 
 ```{r}
-
+levels(df1$Name) <- c("Alicia", "Robert", "Charles")
+print(df1)
 ```
+

@@ -1,0 +1,774 @@
+---
+title: "05NSLAngerAndrea"
+author: "Andrea Anger"
+date: "2025-03-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**ITDS 1372 Computer Programming Date: March 5, 2025
+Lab 3: Conditions, loops, functions**
+
+
+1. Basic if-else Statement
+Instructions:
+• Assign a value to a variable x.
+• Check if x is greater than 5 using an if condition.
+• Print "x is greater than 5" if true; otherwise, print "x is 5 or less".
+
+```{r}
+x<-4
+if(x>5){
+  print("x is greater than 5")
+}
+print("x is 5 or less")
+```
+
+2. if-else with Multiple Conditions
+Instructions:
+• Assign a value to x.
+• Use if to check if x is greater than 0 and print "Positive number".
+• Use else if to check if x is less than 0 and print "Negative number".
+• If neither condition is true, print "Zero".
+
+```{r}
+x <-0
+if(x>0){
+  print("Positive number")
+} else if (x<0){
+  print("Negative number")
+} else {
+  print("Zero")
+}
+```
+
+3. if-else with Logical Operators
+Instructions:
+• Assign an age value to age.
+• Use if with & (AND) to check if age is between 18 and 60.
+• If the condition is true, print "Eligible for work", else print "Not eligible for
+work".
+
+```{r}
+age <- 17
+if (age>=18 && age<=60){
+  print ("Eligible for work")
+} else {
+  print("Not eligible for work")
+}
+```
+
+4. if-else Inside a Function
+Instructions:
+• Define a function check_even_odd(num).
+• Inside the function, use if to check if num is divisible by 2 (num %% 2 == 0).
+• If true, return "Even number"; otherwise, return "Odd number".
+• Call the function with a sample number and print the result.
+ITDS 1372 Computer Programming Date: March 5, 2025
+
+```{r}
+check_even_odd <- function(num) {
+  if (num %% 2 ==0){
+    return("Even number")
+  } else return("Odd number")
+}
+print(check_even_odd(-12))
+
+```
+
+5. Nested if-else
+Instructions:
+• Assign a score value.
+• Use if to check if score is greater than or equal to 90 and print "Grade: A".
+• If not, use another if inside else to check if score >= 75 and print "Grade: B".
+• If neither condition is met, print "Grade: C".
+
+```{r}
+score<- 100
+if (score>=90){
+  print("Grade: A")
+} else {
+  if (score>=75) {
+    print("Grade: B")
+  } else {
+    print("Grade: C")
+  }
+}
+```
+
+6. Using ifelse() for Vectorized Operations
+Instructions:
+• Create a vector numbers with multiple values.
+• Use ifelse(condition, value_if_true, value_if_false) to check if each number
+is even or odd.
+• Store the results in a variable and print them.
+
+```{r}
+numbers <- c(1007, 95, 80, 76, 43)
+results <- ifelse (test = numbers %% 2 ==0, yes= "Even", no="Odd")
+print(results)
+```
+
+7. Basic switch Statement
+Instructions:
+• Assign a string value to day (e.g., "Monday").
+• Use switch() with different cases ("Monday", "Friday", "Sunday", etc.).
+• Print a corresponding message for each case.
+• If the day doesn’t match any case, print "Regular day".
+
+```{r}
+day <- "Friday"
+which_day <- switch(EXPR=day, 
+           Monday=print("Monday"),
+           Tuesday=print("Tuesday"),
+           Wednesday=print("Wednesday"),
+           Thursday=print("Thursday"),
+           Friday=print("Friday"),
+           print("Regular day")
+         )
+```
+
+8. switch Statement Returning a Value
+Instructions:
+• Assign a fruit name ("apple", "banana", "grape", etc.) to fruit.
+• Use switch() to return a color based on the fruit name.
+• Store the result in a variable and print it.
+ITDS 1372 Computer Programming Date: March 5, 2025
+
+```{r}
+fruit <- "banana"
+which_color <- switch(EXPR=fruit, 
+           apple="Red",
+           grape="Purple",
+           banana="Yellow",
+           NA
+         )
+print(which_color)
+```
+
+9. switch with Numeric Cases
+Instructions:
+• Assign a numeric option (e.g., 2) to option.
+• Use switch() with different cases to return "First option selected", "Second
+option selected", etc.
+• Print the result.
+
+```{r}
+option <- 3
+which_option <- switch(EXPR=option, 
+           '1'="First option selected",
+           '2'="Second option selected",
+           '3'="Third option selected",
+           NA
+         )
+print(which_option)
+```
+
+10. switch in a Function
+Instructions:
+• Define a function operation(choice, a, b).
+• Inside the function, use switch() to perform different operations:
+o "add" → return a + b
+o "subtract" → return a - b
+o "multiply" → return a * b
+o "divide" → check if b != 0, return a / b, else return "Cannot divide by
+zero".
+o Default case → return "Invalid choice".
+• Call the function with different operations and print the results.
+
+```{r}
+operation <- function(choice,a,b){
+  choice <- switch (EXPR = choice,
+                    "add"=a+b,
+                    "subtract"=a-b,
+                    "multiply"=a*b,
+                    "divide"=if (b !=0){
+                      a/b
+                    } else { "Cannot divide by zero"},
+                    "Invalid choice"
+  )
+  return(choice)
+}
+print(operation("divide",3,0))
+```
+
+For Loop Problems
+1. Print Numbers from 1 to 10
+• Use a for loop to iterate from 1 to 10.
+• Print each number.
+
+```{r}
+for(numbers in 1:10) {
+  print(numbers)
+}
+```
+
+2. Print Even Numbers from 2 to 20
+• Use a for loop to iterate through even numbers from 2 to 20.
+• Print each even number.
+
+```{r}
+for (even_number in 2:20) {
+    if (even_number %% 2 == 0) {  # Check if even_number is even
+        print(even_number)
+    }
+}
+```
+
+3. Calculate the Sum of First 10 Natural Numbers
+ITDS 1372 Computer Programming Date: March 5, 2025
+• Initialize a variable sum = 0.
+• Use a for loop to add numbers from 1 to 10 to sum.
+• Print the final sum.
+
+```{r}
+sum <- 0
+for (num in 1:10){
+  sum=sum+num
+}
+print(sum)
+```
+
+4. Print Elements of a Vector
+• Create a vector v <- c(10, 20, 30, 40, 50).
+• Use a for loop to print each element.
+
+```{r}
+v <- c(10,20,30,40,50)
+for (i in 1:length(v) ){
+  print(v[i])
+}
+```
+
+5. Factorial of a Number Using for Loop
+• Initialize fact = 1.
+• Use a for loop to multiply numbers from 1 to n.
+• Print the factorial value.
+
+```{r}
+fact <- 1
+n <-4
+for(num in 1:n){
+  fact=fact*num
+}
+print(fact)
+```
+
+While Loop Problems
+6. Print Numbers from 1 to 5 Using while Loop
+• Initialize x = 1.
+• Use a while loop to print numbers from 1 to 5.
+
+```{r}
+x <-1
+while(x<=5){
+  print(x)
+  x=x+1
+}
+```
+
+7. Find the First Number Divisible by 7 and 5
+• Initialize num = 1.
+• Use a while loop to check if num is divisible by 7 and 5.
+• Stop the loop once the first such number is found.
+
+```{r}
+num <-1
+while(num%%7!=0 | num%%5!=0){
+  num=num+1
+}
+print(num)
+```
+
+8. Sum of Digits of a Number Using while Loop
+• Given a number n = 1234, initialize sum = 0.
+• Use a while loop to extract each digit and add it to sum.
+• Print the final sum.
+
+```{r}
+sum <- 0
+n <- 12345
+i <-1
+while(i<=nchar(as.character(abs(n)))){
+  number_as_string <- as.character(abs(n))
+  digit_to_add <- as.numeric(substr(number_as_string,i,i))
+  sum=digit_to_add+sum
+  i=i+1
+}
+print(sum)
+```
+
+ITDS 1372 Computer Programming Date: March 5, 2025
+Repeat Loop Problems
+9. Print "Hello" 5 Times Using repeat Loop
+• Use a repeat loop to print "Hello" 5 times.
+• Use counter variable to track iterations and use break to stop.
+
+```{r}
+x <- 1
+repeat {
+    print("Hello")
+    x=x+1
+    if (x > 5) {
+        break
+    } 
+}
+```
+
+10. Find Square Root Using repeat Loop
+• Use repeat to approximate the square root of n = 25 using Newton’s method.
+• Stop when the difference between two successive approximations is very small.
+
+```{r}
+n <- 25
+repeat {
+    n<-sqrt(n)
+    if (abs(sqrt(n)-n)<1e-10 ) {
+        break
+    } 
+}
+print(n)
+```
+
+Nested Loop Problems
+1. Print a 5x5 Star Pattern
+• Use a nested for loop.
+• Print a * pattern of size 5x5.
+
+```{r}
+for(i in 1:5){
+  stars<-""
+  for(j in 1:5){
+    stars <- paste(stars,"*",sep="")
+  }
+  cat(stars,"\n")
+}
+```
+
+2. Multiplication Table (1 to 5)
+• Use a nested for loop.
+• Print the multiplication table for numbers 1 to 5.
+
+```{r}
+m<-matrix(0,5,5,byrow=FALSE,dimnames=list(c(1:5),c(1:5)))
+for(i in 1:5){
+  product<-0
+  for(j in 1:5){
+    product <- j*i
+    m[i,j] = product
+  }
+}
+print(m)
+```
+
+3. Print a Right-Angled Triangle Pattern
+• Use a nested for loop.
+• Print a right-angled triangle using numbers, where each row contains that row number.
+Example Output:
+1
+2 2
+3 3 3
+4 4 4 4
+5 5 5 5 5 
+ITDS 1372 Computer Programming Date: March 5, 2025
+
+```{r}
+for(i in 1:5){
+  for(j in 1:i){
+    cat(i, " ")
+  }
+  cat("\n")
+}
+```
+
+4. Prime Numbers in a Range (1 to 50) Using Nested Loops
+• Use a for loop to iterate through numbers 1 to 50.
+• Use another for loop to check if the number is prime.
+• Print all prime numbers.
+
+```{r}
+for (num in 1:50) {
+  is_prime <- TRUE  
+  if (num < 2) {
+    is_prime <- FALSE
+  } else {
+    for (i in 2:(num - 1)) { 
+      if (num %% i == 0) {
+        is_prime <- FALSE
+      }
+    }
+  }
+  if (is_prime) {
+    cat(num, " ")
+  }
+}
+```
+
+5. Print a Diamond Pattern
+• Use nested for loops.
+• Print a diamond pattern of * with a given height.
+ifelse() Problems
+
+```{r}
+
+height <- 5
+
+for (i in 1:height) {
+  for (j in 1:(height - i)) {
+    cat(" ")
+  }
+  for (j in 1:i) {
+    cat("* ")
+  }
+  cat("\n")
+}
+
+for (i in (height-1):1) {
+  for (j in 1:(height - i)) {
+    cat(" ")
+  }
+  for (j in 1:i) {
+    cat("* ")
+  }
+  cat("\n")
+}
+  
+```
+
+6. Assign Pass/Fail Using ifelse()
+• Create a vector of student marks.
+• Use ifelse() to assign "Pass" if marks are >=50, otherwise "Fail".
+
+```{r}
+student_marks <- c(87,90,45,75,62)
+ifelse (test=student_marks>=50, yes="Pass",no="Fail")
+student_marks
+```
+
+7. Check Even or Odd Numbers Using ifelse()
+• Create a vector of numbers.
+• Use ifelse() to return "Even" for even numbers and "Odd" for odd numbers.
+
+```{r}
+numbers <- c(100,75,35,78,91,1001)
+ifelse (test=numbers %% 2== 0, yes="Even", no="Odd")
+```
+
+8. Assign Grades Based on Marks
+• Create a vector of student scores.
+• Use ifelse() to assign grades:
+o "A" for >=90,
+o "B" for 80-89,
+o "C" for 70-79,
+o "D" for 60-69,
+o "F" for <60.
+
+```{r}
+student_scores <- c(95,84,76,54,66,78)
+ifelse(test=student_scores>=90, yes="A", ifelse(test=student_scores>=80, yes="B", ifelse(test=student_scores>=70, yes="C", ifelse(test=student_scores>=60, yes="D", no="F"))))
+```
+
+9. Replace Negative Values in a Vector with Zero
+ITDS 1372 Computer Programming Date: March 5, 2025
+• Create a vector with positive and negative values.
+• Use ifelse() to replace all negative values with 0.
+
+```{r}
+vector <- c(-60, 70, 103, -40, -100)
+ifelse (test=vector>0, yes=vector, no=0)
+```
+
+10. Categorize Age Groups Using ifelse()
+• Create a vector of ages.
+• Use ifelse() to categorize:
+o "Child" for <18,
+o "Adult" for 18-60,
+o "Senior" for >60.
+
+```{r}
+ages <- c(6,45,36,21,57,10,68,53)
+ifelse(test=ages>60,yes="Senior", ifelse(test=ages>=18, yes="Adult", no="Child"))
+```
+
+Basic Function Problems
+1. Write a function to add two numbers
+• Create a function add_numbers(a, b) that takes two numbers as input and returns their
+sum.
+• Call the function with two sample values.
+
+```{r}
+a=3
+b=6
+addition <- function(a,b) {
+  sum <- a+b
+  return (sum)
+}
+addition(a,b)
+```
+
+2. Write a function to check if a number is even or odd
+• Define a function check_even_odd(n) that takes an integer and returns "Even" if it's
+even and "Odd" otherwise.
+• Test it with different values.
+
+```{r}
+
+even_odd <- function(a) {
+  if (a%%2==0){
+    return ("Even")
+  } else {return ("Odd")}
+}
+even_odd(10)
+```
+
+3. Write a function to calculate the factorial of a number
+• Create a function factorial(n) that calculates the factorial using recursion.
+• Test the function with n = 5.
+
+```{r}
+
+factorial <- function(a){
+b<-1
+  for (i in 1:a){
+    b<-b*i
+  }
+  return (b)
+}
+
+factorial(5)
+```
+
+4. Write a function to find the maximum of three numbers
+• Define a function max_of_three(a, b, c) that returns the largest of the three numbers.
+• Test with different inputs.
+ITDS 1372 Computer Programming Date: March 5, 2025
+
+```{r}
+max_of_three <- function (a,b,c) {
+  vector <- c(a,b,c)
+  maximum <- max(vector)
+  return (maximum)
+}
+max_of_three (1,2,3)
+```
+
+5. Write a function to generate Fibonacci sequence up to n terms
+• Create a function fibonacci(n) that returns the first n Fibonacci numbers as a vector.
+• Example: fibonacci(6) should return [1, 1, 2, 3, 5, 8].
+
+```{r}
+fibonacci <- function (a) {
+  vector_fib <- c(0,1)
+  for (i in 3:(a+1)){
+    fib <- vector_fib[(i-1)]+vector_fib[(i-2)]
+    vector_fib <- c(vector_fib, fib)
+  } 
+  return (vector_fib [-1])
+}
+fibonacci (6)
+```
+
+Intermediate Function Problems
+6. Write a function to count the number of vowels in a string
+• Create a function count_vowels(text) that takes a string and counts the vowels (a, e,
+i, o, u).
+• Example: count_vowels("hello world") should return 3.
+
+```{r}
+count_vowels <- function(text) {
+  text <- tolower(text)
+  vowels <- c("a", "e", "i", "o", "u")
+  char_vector <- unlist(strsplit(text, ""))
+  vowel_count <- sum(char_vector %in% vowels)
+  return(vowel_count)
+}
+count_vowels("What's' up?")
+```
+
+7. Write a function to reverse a string
+• Define a function reverse_string(str) that reverses a given string.
+• Example: reverse_string("R programming") should return "gnimmargorp R".
+
+```{r}
+reverse_string <- function(str) {
+  reversed_str <- paste(rev(strsplit(str,NULL)[[1]]), collapse = "")
+  
+  return(reversed_str)
+}
+reverse_string("ABCDE")
+```
+
+8. Write a function that accepts a vector and returns only the even numbers
+• Create a function filter_even(vec) that takes a numeric vector and returns a new
+vector with only even numbers.
+• Example: filter_even(c(1,2,3,4,5,6)) should return [2,4,6].
+
+```{r}
+filter_even <- function(vec) {
+  even_numbers <- vec[vec %% 2 == 0]
+  return(even_numbers)
+}
+filter_even(c(1, 2, 3, 4, 5, 6))
+```
+
+Advanced Function Problems
+9. Write a function that checks if a given number is prime
+• Define a function is_prime(n) that returns TRUE if n is a prime number and FALSE
+otherwise.
+• Test it with multiple numbers.
+ITDS 1372 Computer Programming Date: March 5, 2025
+
+```{r}
+is_prime<- function (num){
+  is_prime <- TRUE  
+  if (num < 2) {
+    is_prime <- FALSE
+  } else {
+    for (i in 2:(num - 1)) { 
+      if (num %% i == 0) {
+        is_prime <- FALSE
+      }
+    }
+  }
+  return (is_prime)
+}
+is_prime(31)
+```
+
+10. Write a function that calculates the mean and standard deviation of a numeric vector
+• Create a function stats_summary(vec) that returns a list containing both the mean and
+standard deviation of vec.
+• Example: stats_summary(c(10, 20, 30, 40, 50)) should return a list like:
+$mean
+[1] 30
+$sd
+[1] 15.81
+
+```{r}
+stats_summary <- function (vec){
+  stdev <- sd(vec, na.rm = FALSE)
+  mean <- mean(vec, na.rm = FALSE)
+  result <- list(mean=mean,sd=stdev)
+  return(result)
+}
+stats_summary(c(1,2,3,4,5,6,7,NA))
+```
+
+
+Functions: Using ifelse()
+
+1. Categorize Numbers as Positive, Negative, or Zero
+categorize_numbers <- function(vec) {
+ return(ifelse(vec > 0, "Positive", ifelse(vec < 0, "Negative", "Zero")))
+}
+# Test the function
+numbers <- c(-5, 0, 10, -3, 8, 0)
+categorize_numbers(numbers)
+Output:
+[1] "Negative" "Zero" "Positive" "Negative" "Positive" "Zero"
+
+```{r}
+categorize_numbers <- function(vec) {
+ return(ifelse(vec > 0, "Positive", ifelse(vec < 0, "Negative", "Zero")))
+}
+# Test the function
+numbers <- c(-5, 0, 10, -3, 8, 0)
+categorize_numbers(numbers)
+```
+
+
+2. Assign Grades Based on Scores
+assign_grades <- function(scores) {
+ return(ifelse(scores >= 90, "A",
+ ifelse(scores >= 80, "B",
+ ifelse(scores >= 70, "C",
+ ifelse(scores >= 60, "D", "F")))))
+}
+# Test the function
+marks <- c(95, 82, 74, 60, 45)
+assign_grades(marks)
+Output:
+[1] "A" "B" "C" "D" "F"
+ITDS 1372 Computer Programming Date: March 5, 2025
+
+```{r}
+assign_grades <- function(scores) {
+ return(ifelse(scores >= 90, "A",
+ ifelse(scores >= 80, "B",
+ ifelse(scores >= 70, "C",
+ ifelse(scores >= 60, "D", "F")))))
+}
+# Test the function
+marks <- c(95, 82, 74, 60, 45)
+assign_grades(marks)
+```
+
+3. Categorize Temperature Levels
+categorize_temperature <- function(temp) {
+ return(ifelse(temp >= 30, "Hot",
+ ifelse(temp >= 20, "Warm",
+ ifelse(temp >= 10, "Cool", "Cold"))))
+}
+# Test the function
+temps <- c(35, 25, 15, 5, 28)
+categorize_temperature(temps)
+Output:
+[1] "Hot" "Warm" "Cool" "Cold" "Warm"
+
+```{r}
+categorize_temperature <- function(temp) {
+ return(ifelse(temp >= 30, "Hot",
+ ifelse(temp >= 20, "Warm",
+ ifelse(temp >= 10, "Cool", "Cold"))))
+}
+# Test the function
+temps <- c(35, 25, 15, 5, 28)
+categorize_temperature(temps)
+```
+
+4. Check Age Group (Child, Teen, Adult, Senior)
+age_group <- function(ages) {
+ return(ifelse(ages < 13, "Child",
+ ifelse(ages < 20, "Teen",
+ ifelse(ages < 60, "Adult", "Senior"))))
+}
+# Test the function
+ages <- c(10, 16, 25, 45, 70)
+age_group(ages)
+Output:
+[1] "Child" "Teen" "Adult" "Adult" "Senior"
+
+```{r}
+age_group <- function(ages) {
+ return(ifelse(ages < 13, "Child",
+ ifelse(ages < 20, "Teen",
+ ifelse(ages < 60, "Adult", "Senior"))))
+}
+# Test the function
+ages <- c(10, 16, 25, 45, 70)
+age_group(ages)
+```
+
+5. Classify Numbers as Small, Medium, or Large
+classify_numbers <- function(vec) {
+ return(ifelse(vec < 10, "Small",
+ ifelse(vec < 50, "Medium", "Large")))
+}
+# Test the function
+values <- c(5, 20, 45, 75, 100)
+classify_numbers(values)
+
+```{r}
+classify_numbers <- function(vec) {
+ return(ifelse(vec < 10, "Small",
+ ifelse(vec < 50, "Medium", "Large")))
+}
+# Test the function
+values <- c(5, 20, 45, 75, 100)
+classify_numbers(values)
+
+```
+
