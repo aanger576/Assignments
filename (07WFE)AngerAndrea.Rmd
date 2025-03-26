@@ -53,13 +53,20 @@ mtrx
 &emsp;**Output**<br/><br/>
 ![Fig: Graph](Outputimg/Q3Output.png){#id .class width=18% height=18%}
 ```{r}
+mtrx<- matrix(c(1:5, 6:10, 11:15), nrow = 5, ncol = 3)
+double_mtrx <- apply(mtrx,1:2,FUN=function(x){2*x})
+print(double_mtrx)
 
 ```
 **Q04.** Write a function named **pizza_toppings** which passes one **ellipsis** argument allowing for various toppings at function call.<br/>
 &emsp;**Output**<br/>
 ![Fig: Graph](Outputimg/Q4Output.png){#id .class width=25% height=25%}
 ```{r}
+pizza_toppings <- function(...){
+  return (paste(...))
+}
 
+pizza_toppings("pepperoni", "salami","cheese")
 ```
 **Q05.** This question implements the lazy eval concept. Write a function named **sum_of_vec** which takes two arguments **vec** and **sum_of**; **vec** is a vector of numbers and **sum_of** is to calculate the sum of the vec. The function will ignore the NA value (if there is any) in the vector and display the sum of the vector. The function header and output are given below.<br/><br/>
 **sum_of_vec <- function(vec, sum_of = sum(vec)){}**<br/> 
@@ -69,7 +76,11 @@ sum_of_vec(c(1,2,3,4,5))&emsp;&emsp;&emsp;&emsp;&emsp;The sum of vector is 15<br
 sum_of_vec(c(1,2,3,4,NA))&emsp;&emsp;&emsp;&emsp;&nbsp;The sum of vector is 10<br/>
 
 ```{r}
-
+sum_of_vec <- function(vec,sum_of=sum(vec, na.rm=TRUE)){
+  print(paste("The sum of vector is", sum_of))
+}
+sum_of_vec(c(1,2,3,4,5))
+sum_of_vec(c(1,2,3,4,NA))
 ```
 
 **Q06.** Write a function named **deposit**. The function takes two arguments **amount** and **balance**. The balance has a default value of $500. If deposit amount is negative, throw errors with the message "Deposit amount cannot be negative!", otherwise add deposit amount to the balance and return the balance. This function does not use try clause.  
@@ -79,7 +90,13 @@ deposit(-100,500)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Err
 deposit(100,500)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;600<br/> 
 
 ```{r}
-
+deposit <- function (amount,balance=500){
+  if (amount<0){
+    print("Deposit amount cannot be negative!")
+  } else {return (balance+amount)
+    } 
+}
+deposit(30)
 ```
 
 **Q07.** Declare a matrix named **mtrx** with value (1:25) in 5 rows and 5 columns. Write a function named **sum_matrix** which has one argument **m** for the matrix **mtrx**. Add a **txtProgressBar** with your choice of style and char display to monitor the completion status. Use nested for loop to perform the calculation and the progressbar should be set at the inner loop. Add a sleep of a quarter second (0.25) before setting the progressbar.<br/>
@@ -90,6 +107,20 @@ deposit(100,500)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbs
 
 
 ```{r}
+mtrx<- matrix(1:25, nrow=5, ncol=5)
+sum_matrix <- function(m){
+progbar <- txtProgressBar(min=0,max=length(m),style=1,char= "=")
+  for (i in 1:nrow(m)){
+    for (j in 1:ncol(m)){
+      sum <- sum+m[i,j]
+      Sys.sleep(0.25)
+      setTxtProgressBar(progbar,value=(i - 1) * ncol(m) + j)
+    }
+  }
+close(progbar)
+return(sum)
+}
+sum_matrix(mtrx)
 
 ```
 
@@ -102,6 +133,19 @@ Warning in withdrawal(-100, 500) : Withdrawal amount cannot be negative, reset t
 withdrawal(100, 200) : 100
 
 ```{r}
+attempt <- try(withdrawal(-100),silent=TRUE)
+withdrawal <- function (amount,balance=200){
+  if (amount <0){
+    print("Withdrawal amount cannot be negative, reset the amount to positive.")
+    amount=abs(amount)
+} 
+  if (amount>balance){
+    print("Insufficient fund")
+} else {balance=balance-amount
+    return (balance)
+  }
+}
+withdrawal(50)
 
 ```
 
@@ -112,6 +156,22 @@ input_validation("2")&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Error: Inpu
 input_validation(2)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;"Valid input: 2"<br/>
 
 ```{r}
+
+input_validation <- function(x) {
+  result <- tryCatch({
+    if (!is.numeric(x)) {
+      stop("Input data must be numeric.")
+    }
+    return(x)
+  }, error = function(e) {
+    cat("Error: ", e$message, "\n")
+    return(NA)
+  })
+  
+  return(result)
+}
+input_validation(5)   
+input_validation("a")
 
 ```
 
@@ -124,6 +184,21 @@ count_vowel("123456")&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;There are 0 vowel(s) in
 count_vowel("abcdea")&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;There are 3 vowel(s) in 'abcdea'<br/>
 
 ```{r}
+is_vowel <- function(char) {
+  vowels <- c("a", "e", "i", "o", "u", "A", "E", "I", "O", "U")
+  return(char %in% vowels)
+}
+count_vowel <- function(input_string) {
+  vowel_count <- 0
+  for (char in strsplit(input_string, "")[[1]]) {
+    if (is_vowel(char)) {
+      vowel_count <- vowel_count + 1
+    }
+  }
+  return(vowel_count)
+}
 
+result <- count_vowel("Hello World")
+cat("Number of vowels:", result)
 ```
 
