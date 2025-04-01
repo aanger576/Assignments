@@ -1,0 +1,191 @@
+---
+title: "DataTrans_DatTidy_Lab"
+author: "Andie Anger"
+date: "3/31/25"
+output: html_document
+---
+
+###Data Transformation
+
+##Start by loading library(tidyverse) and library(dplyr) if not done already.
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(nycflights13)
+library(tibble)
+install.packages("nycflights13")
+install.packages("dplyr")
+install.packages("tidyverse")
+install.packages("tibble")
+
+
+```
+
+
+3.2.5 Exercises
+In a single pipeline for each condition, find all flights that meet the condition:
+
+1. Had an arrival delay of two or more hours
+
+```{r}
+flights |>
+  filter(arr_delay >= 120)
+```
+
+2. Flew to Houston (IAH or HOU)
+
+```{r}
+flights |>
+  filter(dest == "IAH" | dest=="HOU") 
+```
+
+3. Were operated by United, American, or Delta
+
+```{r}
+flights|>
+  filter(carrier=="DL" | carrier=="AA" | carrier=="UA") 
+```
+
+4. Departed in summer (July, August, and September)
+
+```{r}
+flights|>
+  filter(month %in% c(7:9)) 
+```
+
+5. Arrived more than two hours late but didn’t leave late
+
+```{r}
+flights|>
+  filter(dep_delay<=0 & arr_delay>120) 
+```
+
+6. Were delayed by at least an hour, but made up over 30 minutes in flight
+
+```{r}
+flights|>
+  filter(dep_delay >= 60 & arr_delay < dep_delay - 30) 
+```
+
+7. Sort flights to find the flights with the longest departure delays. Find the flights that left earliest in the morning.
+
+```{r}
+flights|>
+  arrange(desc(dep_delay),sched_dep_time)
+```
+
+
+8. Sort flights to find the fastest flights. (Hint: Try including a math calculation inside of your function.)
+
+```{r}
+flights |> 
+  mutate(
+    speed = distance / air_time * 60
+  ) |> arrange(speed)
+```
+
+9. Was there a flight on every day of 2013?
+
+```{r}
+all_dates_2013 <- tibble(date = seq.Date(from = as.Date("2013-01-01"), 
+                                         to = as.Date("2013-12-31"), by = "day"))
+
+# Use a pipeline to check for flights every day in 2013
+missing_dates <- flights |> 
+  filter(year == 2013) |>  # Filter for flights from 2013
+  select(year, month, day) |>  # Select year, month, and day
+  distinct() |>  # Get unique combinations of year, month, and day
+  mutate(date = make_date(year, month, day)) |>  # Create a date column
+  select(date) |>  # Only keep the date column
+  anti_join(all_dates_2013, by = "date")  # Check if any dates are missing
+
+# Display the results
+if (nrow(missing_dates) == 0) {
+  print("There was a flight every day of 2013.")
+} else {
+  print("There were days with no flights.")
+  print(missing_dates)  # Show the dates with no flights
+}
+```
+
+
+10. Which flights traveled the farthest distance? Which traveled the least distance? 
+
+```{r}
+flights |> 
+  arrange(desc(distance)) |>
+  distinct(distance, .keep_all=TRUE) |>
+  slice_head(n = 5)
+
+
+flights |>
+  arrange(distance) |>
+  distinct(distance, .keep_all=TRUE) |>
+  slice_head(n = 5)
+```
+
+
+11. Does it matter what order you used filter() and arrange() if you’re using both? Why/why not? Think about the results and how much work the functions would have to do. 
+#It does not change the result by changing the order of the filter() and arrange() functions.
+
+###Displaying three tables
+
+TB cases in world
+
+###5.2.1 Exercises
+For each of the sample tables, describe what each observation and each column represents.
+
+Sketch out the process you’d use to calculate the rate for table2 and table3. You will need to perform four operations:
+
+1.  Extract the number of TB cases per country per year.
+2.  Extract the matching population per country per year.
+3.  Divide cases by population, and multiply by 10000.
+4.  Store back in the appropriate place.
+
+
+
+You haven’t yet learned all the functions you’d need to actually perform these operations, but you should still be able to think through the transformations you’d need.
+
+
+```{r}
+table1
+```
+
+#To convert to table 2:
+
+```{r}
+pivot_longer(table1, cols=3:4, names_to = "type", values_to = "count", values_drop_na = FALSE) 
+```
+
+```{r}
+table2
+```
+
+#To convert to table 3:
+```{r}
+mutate(table1,rate=cases/population*10000,.keep="unused")
+```
+
+
+```{r}
+table3
+```
+```{r}
+# Compute rate per 10,000
+table1 |>
+  mutate(rate = cases / population * 10000)
+
+
+# Compute total cases per year
+table1 |> 
+  group_by(year) |> 
+  summarize(total_cases = sum(cases))
+
+
+# Visualize changes over time
+ggplot(table1, aes(x = year, y = cases)) +
+  geom_line(aes(group = country), color = "grey50") +
+  geom_point(aes(color = country, shape = country)) +
+  scale_x_continuous(breaks = c(1999, 2000)) # x-axis breaks at 1999 and 2000
+```
